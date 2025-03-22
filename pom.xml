@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>br.com.binsolution</groupId>
+	<artifactId>ecs_fargate_cdk_02</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>ecs_fargate_cdk_02</name>
+	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>17</java.version>
+		<dockerhub.username>wanderson.santos01@gmail.com</dockerhub.username> <!-- Set your Docker Hub username -->
+        <dockerhub.password>5u1m7a10u</dockerhub.password> <!-- Set your Docker Hub password -->
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
+			<version>1.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-activemq</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Jib Maven Plugin for Docker Hub integration -->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.3</version>
+                <configuration>
+                    <!-- Docker Hub credentials -->
+                    <to>
+                        <image>docker.io/wandersonsantos01/ecs-fargate-cdk-02</image> <!-- Replace with your Docker Hub repo -->
+                        <auth>
+                            <username>${dockerhub.username}</username>
+                            <password>${dockerhub.password}</password>
+                        </auth>
+                        <tags>
+                            <tag>latest</tag>
+                            <tag>0.0.1</tag>
+                        </tags>
+                    </to>
+                    <container>
+                        <mainClass>br.com.binsolution.ecs_fargate_cdk_02.EcsFargateCdk02Application</mainClass> <!-- Replace with your main class -->
+                        <ports>
+                            <port>9090</port>
+                        </ports>
+                    </container>
+                    <from>
+                        <image>eclipse-temurin:17-jdk-alpine</image>
+                    </from>
+                </configuration>
+            </plugin>
+
+		</plugins>
+	</build>
+
+</project>
